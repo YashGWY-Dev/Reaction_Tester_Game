@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reaction Tester</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+      background: #f2f2f2;
+    }
+
+    #box {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      display: none;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Reaction Tester Game</h1>
+  <p>Click the box as quickly as you can when it appears!</p>
+  <h3 id="reactionTime">Reaction Time: - - s</h3>
+  <div id="box" onclick="handleBoxClick()"></div>
+
+  <script>
+    var box = document.getElementById("box");
+    var reactionTimeText = document.getElementById("reactionTime");
+    var startTime;
+
+    function getRandomColor() {
+      var letters = "0123456789ABCDEF";
+      var color = "#";
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function showBox() {
+      var top = Math.random() * (innerHeight - 150);
+      var left = Math.random() * (innerWidth - 150);
+      var size = 50 + Math.random() * 100;
+
+      box.style.top = top + "px";
+      box.style.left = left + "px";
+      box.style.width = size + "px";
+      box.style.height = size + "px";
+      box.style.backgroundColor = getRandomColor();
+      box.style.display = "block";
+
+      startTime = performance.now();
+    }
+
+    function handleBoxClick() {
+      var endTime = performance.now();
+      var reaction = Math.floor(endTime - startTime)/1000;
+      reactionTimeText.innerHTML = "Reaction Time: " + reaction + "s";
+      box.style.display = "none";
+      showBox();
+    }
+
+    showBox();
+  </script>
+</body>
+</html>
